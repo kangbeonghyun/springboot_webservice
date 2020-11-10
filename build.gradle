@@ -1,0 +1,42 @@
+//gradle: 빌드 툴로서 빌드 스크립트를 간단하게 작성할 수 있다
+// 자바 애플리케이션 빌드과정은 소스코드(.java)를 클래스 파일(.class)로 컴파일 후 규약에 맞게 작성했는지 확인
+// 코드의 정적해석, 테스트 및 리포트 출, javadoc과 같은 문서 작성, 클래스, 리소스 파일 들을 패키징(.jar,war)->배포인데
+// gradel이 이 모든 과정을 자동화 해준다. 이로인해 개발에만 집중할 수 있게 해준다
+// 규칙을 따라 디렉토리 구조를 만드는 규칙 기반 빌드로 빌드 스크립트 내용을 줄일 수 있으며
+// 자체 문법(DSL)을 제공하여 더욱 간략히 할 수 있다. 또한 wrapper를 활용하여 그래들이 설치되지 않는 환경에서도 빌드 가능
+//그래들의 실행 단위는 task이고 &gradle tesk명 으로 실행할 수 있다.
+
+//이 프로젝트의 플러그인 의존성 관리를 위한 설정
+buildscript{
+    //ext:전역변수 설정, 즉 spring-boot-gradle-plugin의 2.1.7 release를 의존성으로 받겠다.
+    ext{
+        springBootVersion='2.1.7.RELEASE'
+    }
+    repositories{
+        mavenCentral()
+        jcenter()
+    }
+    dependencies{
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'//스프링부트의 의존성을 관리해 주는 플러그인
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+//각 종 의존성(라이브러리)들을 어떤 원격 저장소에서 받을 지 정하는 것
+repositories {
+    mavenCentral()//거의 주로 씀, 라이브러리 업로드가 복잡함..
+    jcenter()// 라이브러리 업로드가 쉬워서 요즘은 이거 쓰는 듯.
+     }
+
+//프로젝트 개발에 필요한 의존성을 선언하는 곳..
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    //testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
