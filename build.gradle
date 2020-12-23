@@ -40,7 +40,7 @@ dependencies {
     compile('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')//스프링부트용 spring data jPa 추상화 라이브러이
     compile('com.h2database:h2')//인메모리 관계형 db
-    compile('org.springframework.boot:spring-boor-starter-mustache')
+    compile('org.springframework.boot:spring-boot-starter-mustache')
     //testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
